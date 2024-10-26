@@ -1,0 +1,75 @@
+[
+    {
+      "id": 1,
+      "name": "Espresso",
+      "description": "A full-flavored, concentrated form of coffee served in small, strong shots.",
+      "taste": "Bold, rich, and slightly bitter",
+      "price": 2.50,
+      "image": "https://i.pinimg.com/736x/c5/f0/2c/c5f02c40ed644b4d3a626ef2bd8ecf29.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Cappuccino",
+      "description": "Espresso with steamed milk and a layer of froth on top.",
+      "taste": "Smooth, creamy with a mild espresso taste",
+      "price": 3.00,
+      "image": "https://i.pinimg.com/564x/a4/a1/7b/a4a17bf478e22fb93a138e3c87c62f8b.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Latte",
+      "description": "A chocolate-flavored variant of a latte, often topped with whipped cream.",
+      "taste": "Mild, creamy with a subtle espresso flavor",
+      "price": 3.50,
+      "image": "https://i.pinimg.com/564x/4f/68/00/4f680017dfb64386e6e2b65636b02363.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Americano",
+      "description": "Espresso diluted with hot water to create a milder coffee.",
+      "taste": "Smooth, slightly bitter with a watery texture",
+      "price": 2.75,
+      "image": "https://i.pinimg.com/564x/d6/f2/e9/d6f2e9113aa8f9aef8b59a8e28bd7255.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Mocha",
+      "description": "A chocolate-flavored variant of a latte, often topped with whipped cream.",
+      "taste": "Sweet, rich with a hint of chocolate",
+      "price": 4.00,
+      "image": "https://i.pinimg.com/564x/98/1c/0f/981c0f6b5256f215661ed4656e3e9557.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Macchiato",
+      "description": "Espresso with a small amount of steamed milk, typically topped with foam.",
+      "taste": "Bold with a hint of creaminess",
+      "price": 3.25,
+      "image": "https://i.pinimg.com/564x/da/1c/f5/da1cf52f55b7b4adcac8dbff75a7a223.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Flat White",
+      "description": "Similar to a latte but with a higher coffee-to-milk ratio and microfoam.",
+      "taste": "Smooth, creamy with a strong coffee flavor",
+      "price": 3.75,
+      "image": "https://i.pinimg.com/564x/cb/8c/cd/cb8ccd25a6933e97109bbce3f447abd3.jpg"
+    },
+    {
+      "id": 8,
+      "name": "Cold Brew",
+      "description": "Brewed with cold water over an extended period, creating a smooth, rich flavor.",
+      "taste": "Smooth, less acidic with a natural sweetness",
+      "price": 4.50,
+      "image": "https://i.pinimg.com/564x/0d/10/8f/0d108f58b6812f5cbd016208249283cf.jpg"
+    },
+    {
+      "id": 9,
+      "name": "Iced Coffee",
+      "description": "Chilled coffee served over ice, often sweetened and with added milk.",
+      "taste": "Refreshing with a balanced coffee flavor",
+      "price": 3.25,
+      "image": "https://i.pinimg.com/564x/35/9f/c1/359fc15a59e47967f1e95305c7ae194e.jpg"
+    }
+  ]
+  

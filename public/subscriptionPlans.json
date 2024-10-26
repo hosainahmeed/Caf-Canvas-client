@@ -1,0 +1,53 @@
+[
+    {
+        "id": 1,
+        "planName": "Basic Brew",
+        "description": "Enjoy freshly roasted coffee delivered monthly. Perfect for casual coffee drinkers.",
+        "price": 15.99,
+        "frequency": "Monthly",
+        "benefits": [
+            "1 bag of coffee (12oz)",
+            "Free shipping on all orders",
+            "Exclusive access to new blends"
+        ]
+    },
+    {
+        "id": 2,
+        "planName": "Coffee Connoisseur",
+        "description": "For true coffee lovers who want to explore a variety of flavors each month.",
+        "price": 29.99,
+        "frequency": "Monthly",
+        "benefits": [
+            "2 bags of coffee (12oz each)",
+            "Free shipping on all orders",
+            "Tasting notes and brewing tips",
+            "Access to exclusive coffee events"
+        ]
+    },
+    {
+        "id": 3,
+        "planName": "Family Pack",
+        "description": "Designed for families or households with multiple coffee drinkers. Share the love!",
+        "price": 39.99,
+        "frequency": "Monthly",
+        "benefits": [
+            "4 bags of coffee (12oz each)",
+            "Free shipping on all orders",
+            "Family recipe ideas",
+            "Exclusive discounts on accessories"
+        ]
+    },
+    {
+        "id": 4,
+        "planName": "Seasonal Special",
+        "description": "Experience seasonal blends delivered four times a year. Perfect for trying new flavors.",
+        "price": 49.99,
+        "frequency": "Quarterly",
+        "benefits": [
+            "3 bags of seasonal coffee (12oz each)",
+            "Free shipping on all orders",
+            "Exclusive holiday blends",
+            "Early access to seasonal sales"
+        ]
+    }
+]

@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "name": "Sarah Johnson",
+        "rating": 5,
+        "feedback": "The coffee here is absolutely amazing! I’ve never had such a rich and flavorful cup. Highly recommend it to all coffee lovers.",
+        "profileImage": "https://example.com/images/sarah.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Mark Williams",
+        "rating": 4,
+        "feedback": "Great quality and fast delivery! The aroma of the beans is unmatched, and the customer service was very helpful.",
+        "profileImage": "https://example.com/images/mark.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Emily Chen",
+        "rating": 5,
+        "feedback": "I've tried many coffee brands, but this one stands out! The blends are perfect for my morning routine. Will definitely buy again.",
+        "profileImage": "https://example.com/images/emily.jpg"
+    },
+    {
+        "id": 4,
+        "name": "James Anderson",
+        "rating": 4,
+        "feedback": "Delicious coffee with deep flavors. The only downside was a slight delay in shipping, but it was worth the wait!",
+        "profileImage": "https://example.com/images/james.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Sophia Patel",
+        "rating": 5,
+        "feedback": "The subscription service is a game-changer! Fresh coffee delivered right to my door every month. Love it!",
+        "profileImage": "https://example.com/images/sophia.jpg"
+    }
+]

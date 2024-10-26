@@ -1,0 +1,82 @@
+[
+    {
+        "id": 1,
+        "name": "Alice Johnson",
+        "position": "Manager",
+        "experience": 5,
+        "image": "https://i.pinimg.com/564x/f5/e1/4b/f5e14b0883e9cf37019583dffd9535be.jpg",
+        "contact": {
+            "email": "alice.johnson@example.com",
+            "phone": "555-123-4567"
+        },
+        "skills": [
+            "Leadership",
+            "Customer Service",
+            "Inventory Management"
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Mark Smith",
+        "position": "Barista",
+        "experience": 2,
+        "image": "https://i.pinimg.com/564x/cb/7d/45/cb7d45d732691f2f6e5220b69ceb9e3f.jpg",
+        "contact": {
+            "email": "mark.smith@example.com",
+            "phone": "555-234-5678"
+        },
+        "skills": [
+            "Espresso Preparation",
+            "Customer Service",
+            "Cash Handling"
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Jessica Lee",
+        "position": "Barista",
+        "experience": 3,
+        "image": "https://i.pinimg.com/564x/0f/9f/19/0f9f191be064dc5a5d3c5c56d5ebbf8f.jpg",
+        "contact": {
+            "email": "jessica.lee@example.com",
+            "phone": "555-345-6789"
+        },
+        "skills": [
+            "Latte Art",
+            "Coffee Brewing",
+            "Customer Service"
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Tom Brown",
+        "position": "Chef",
+        "experience": 4,
+        "image": "https://i.pinimg.com/564x/96/90/98/969098b0f3d2ae5971c22182856c6835.jpg",
+        "contact": {
+            "email": "tom.brown@example.com",
+            "phone": "555-456-7890"
+        },
+        "skills": [
+            "Baking",
+            "Recipe Development",
+            "Food Safety"
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Sara Wilson",
+        "position": "Cleaner",
+        "experience": 1,
+        "image": "https://i.pinimg.com/564x/e5/48/74/e54874bab9b05ec28f5a90dc6f3c8507.jpg",
+        "contact": {
+            "email": "sara.wilson@example.com",
+            "phone": "555-567-8901"
+        },
+        "skills": [
+            "Cleaning",
+            "Organization",
+            "Attention to Detail"
+        ]
+    }
+]

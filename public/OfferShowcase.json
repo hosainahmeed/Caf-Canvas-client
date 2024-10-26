@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "title": "Coffee To Go",
+        "description": "Freshly brewed coffee in a convenient, grab-and-go style for those on the move. Perfect for busy mornings or an afternoon pick-me-up.",
+        "image": "coffee_to_go.jpg"
+    },
+    {
+        "id": 2,
+        "title": "Coffee & Pastry",
+        "description": "Indulge in the classic pairing of a steaming cup of coffee with a delicious, freshly baked pastry. A treat for any time of the day!",
+        "image": "coffee_and_pastry.jpg"
+    },
+    {
+        "id": 3,
+        "title": "Bean Varieties",
+        "description": "Explore our selection of premium coffee beans from around the world. Each bean variety is carefully selected to deliver unique flavors and aromas.",
+        "image": "bean_varieties.jpg"
+    },
+    {
+        "id": 4,
+        "title": "Types of Coffee",
+        "description": "From espressos to lattes, explore a variety of coffee types that cater to every taste and preference. Savor the richness of each carefully crafted cup.",
+        "image": "types_of_coffee.jpg"
+    }
+]

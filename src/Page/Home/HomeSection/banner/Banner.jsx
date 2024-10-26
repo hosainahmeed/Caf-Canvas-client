@@ -51,7 +51,7 @@ export default function Banner() {
           className="textCon absolute z-[999] pointer-events-none 
           sm:top-20 md:top-32 lg:top-40 xl:top-44 text-center flex items-center
            justify-center flex-col text-white font-black px-4 md:px-0
-            text-xl sm:text-4xl md:text-5xl lg:text-6xl gap-2 md:gap-6 xl:text-7xl leading-tight"
+            text-xl sm:text-4xl md:text-5xl lg:text-6xl gap-2 md:gap-6 xl:text-6xl py-12 leading-tight"
         >
           <motion.h1
             initial={{ opacity: 0, scale: 0.8 }}

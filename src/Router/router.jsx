@@ -5,6 +5,9 @@ import UpdateCoffe from "../Components/UpdateCoffe";
 import Home from "../Page/Home/Home";
 import SignUp from "../Page/Signup/SignUp";
 import Login from "../Page/Login/Login";
+import Menu from "../Page/Menu/Menu";
+import Reservation from "../Page/Reservation/Reservation";
+import AboutSection from "../Page/AboutPage/AboutSection";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +17,18 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+      },
+      {
+        path: "/menu",
+        element: <Menu></Menu>,
+      },
+      {
+        path: "/about",
+        element: <AboutSection></AboutSection>,
+      },
+      {
+        path: "/reservation",
+        element: <Reservation></Reservation>,
       },
       {
         path: "/updatecoffee",

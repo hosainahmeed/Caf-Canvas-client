@@ -5,7 +5,9 @@ import Footer from "../Page/Shared/Footer";
 function Layout() {
   return (
     <>
-      <Header />
+      <div className="sticky top-0 z-[999]">
+        <Header />
+      </div>
       <Outlet></Outlet>
       <Footer />
     </>

@@ -8,6 +8,8 @@ import Login from "../Page/Login/Login";
 import Menu from "../Page/Menu/Menu";
 import Reservation from "../Page/Reservation/Reservation";
 import AboutSection from "../Page/AboutPage/AboutSection";
+import Blog from "../Page/Blog/Blog";
+import Order from "../Page/Order/Order";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +23,14 @@ const router = createBrowserRouter([
       {
         path: "/menu",
         element: <Menu></Menu>,
+      },
+      {
+        path: "/blog",
+        element: <Blog></Blog>,
+      },
+      {
+        path: "/order",
+        element: <Order></Order>,
       },
       {
         path: "/about",

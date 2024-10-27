@@ -13,9 +13,9 @@ export default function CombinedNavbar() {
 
   const menuItems = [
     { label: "Home", path: "/" },
+    { label: "About Us", path: "/about" },
     { label: "Menu", path: "/menu" },
     { label: "Reservation", path: "/reservation" },
-    { label: "About Us", path: "/about" },
     { label: "Blog", path: "/blog" },
     { label: "Order", path: "/order" },
     { label: "History", path: "/history" },

@@ -5,6 +5,8 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { FaQuoteLeft } from "react-icons/fa";
 import "./reviewStyle.css";
 import ReactStars from "react-rating-stars-component";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../../../Components/Hook/useAxiosPublic";
 
 function Testimonial() {
   const [reviews, setReviews] = useState([]);
@@ -14,7 +16,18 @@ function Testimonial() {
       .then((res) => res.json())
       .then((data) => setReviews(data));
   }, []);
+  const axiosPublic = useAxiosPublic();
 
+  const { data: reviewsData=[], isLoading } = useQuery({
+    queryKey: ["reviews"],
+    queryFn: async () => {
+      const result = await axiosPublic.get("/reviews");
+      return result.data;
+    },
+  });
+if (isLoading) {
+  return
+}
   return (
     <div className="mt-12 md:mt-28">
       <SectionHeader subHead="What's our client says" head="Testimonials" />
@@ -32,8 +45,8 @@ function Testimonial() {
           }}
           className="mySwiper"
         >
-          {reviews.map((review) => (
-            <SwiperSlide key={review.id}>
+          {reviewsData.map((review) => (
+            <SwiperSlide key={review._id}>
               <div className="flex items-start justify-around space-x-5 px-12 py-12">
                 <div className="review-card min-h-48 text-start">
                   <div className="flex items-start justify-between">
@@ -48,9 +61,7 @@ function Testimonial() {
                         </div>
                       </div>
                       <div>
-                        <h3 className="leading-4 text-nowrap">
-                          {review.name}
-                        </h3>
+                        <h3 className="leading-4 text-nowrap">{review.name}</h3>
                         <p className="leading-4">{review.designation}</p>
                       </div>
                     </div>
@@ -67,8 +78,8 @@ function Testimonial() {
                         value={review.rating}
                         size={24}
                         edit={false}
-                        isHalf={true} 
-                        activeColor="#ffd700" 
+                        isHalf={true}
+                        activeColor="#ffd700"
                       />
                       <span className="ml-2">{review.rating}</span>
                     </div>

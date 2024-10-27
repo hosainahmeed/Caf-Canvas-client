@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { Menu, Button, Drawer } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CiMenuBurger } from "react-icons/ci";
-import { IoMdClose } from "react-icons/io";
+import { IoIosLogOut, IoMdClose } from "react-icons/io";
 import logo from "../../assets/images/more/logo1.png";
 import useAuth from "../../Components/Hook/useAuth";
+import { Popover, PopoverTrigger, PopoverContent, User } from "@nextui-org/react";
 
 export default function CombinedNavbar() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const { user } = useAuth();
+  const { user, logOut } = useAuth();
+  const navigate = useNavigate();
 
   const menuItems = [
     { label: "Home", path: "/" },
@@ -23,6 +25,11 @@ export default function CombinedNavbar() {
   ];
 
   const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
+
+  const handleLogOut = () => {
+    logOut();
+    navigate("/login");
+  };
 
   return (
     <div className="navbar-container">
@@ -52,9 +59,30 @@ export default function CombinedNavbar() {
         {/* Right Side Login and Signup */}
         <div className="flex gap-4 items-center justify-end">
           {user ? (
-            <Link to="/login" className="hidden lg:block">
-              Login
-            </Link>
+            <div className="flex items-center gap-2">
+              <Popover showArrow placement="bottom">
+                <PopoverTrigger>
+                  <User
+                    as="button"
+                    name={user.displayName || "User"}
+                    className="transition-transform w-12 h-12 object-cover"
+                    avatarProps={{
+                      src: user.image || "",
+                      alt: "User Avatar",
+                      
+                    }}
+                  />
+                </PopoverTrigger>
+                <PopoverContent className="p-4">
+                  <p className="text-sm font-semibold">{user.name}</p>
+                  <p className="text-xs text-gray-500">{user.description}</p>
+                </PopoverContent>
+              </Popover>
+
+              <button onClick={handleLogOut} className="hidden lg:block">
+                <IoIosLogOut style={{ fontSize: "24px" }} />
+              </button>
+            </div>
           ) : (
             <Button type="primary" href="/signup">
               Sign Up

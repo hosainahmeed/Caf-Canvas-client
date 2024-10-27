@@ -8,6 +8,8 @@ function AuthProvider({ children }) {
   const auth = getAuth(app);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  console.log(user);
+  
 
   // Sign up function
   const createUser = (email, password) => {

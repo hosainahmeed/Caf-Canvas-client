@@ -7,6 +7,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./BannerStyle.css";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Link } from "react-router-dom";
 
 export default function Banner() {
   return (
@@ -77,7 +78,7 @@ export default function Banner() {
               whileHover={{ scale: 1.1 }}
               className="bg-transparent border pointer-events-auto border-white text-white font-semibold py-2 px-4 hover:bg-white hover:text-black transition-all text-sm sm:text-base"
             >
-              Book Table
+              <Link to={'/reservation'}>Book Table</Link>
             </motion.button>
           </div>
         </div>

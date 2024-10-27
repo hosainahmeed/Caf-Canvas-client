@@ -67,6 +67,10 @@ function AboutSection() {
           </motion.div>
         ))}
       </div>
+
+      <SectionHeader
+      
+      ></SectionHeader>
     </div>
   );
 }

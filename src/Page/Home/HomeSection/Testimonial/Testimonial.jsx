@@ -18,16 +18,24 @@ function Testimonial() {
   }, []);
   const axiosPublic = useAxiosPublic();
 
-  const { data: reviewsData=[], isLoading } = useQuery({
+  const { data: reviewsData = [], isLoading } = useQuery({
     queryKey: ["reviews"],
     queryFn: async () => {
       const result = await axiosPublic.get("/reviews");
       return result.data;
     },
   });
-if (isLoading) {
-  return
-}
+  if (isLoading) {
+    return (
+      <div className="mt-12 md:mt-28">
+        <SectionHeader subHead="What's our client says" head="Testimonials" />
+        <div className="flex w-full justify-between items-center">
+          <div className="skeleton h-32 w-96"></div>
+          <div className="skeleton h-32 w-96"></div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="mt-12 md:mt-28">
       <SectionHeader subHead="What's our client says" head="Testimonials" />

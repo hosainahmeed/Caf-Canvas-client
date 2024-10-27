@@ -1,11 +1,14 @@
 import { motion } from "framer-motion";
 import about from "../../../../assets/images/About/about.jfif";
 import SectionHeader from "../../../../Components/utils/sectionHeader";
-import backImg from '../../../../assets/images/more/1.png'
+import backImg from "../../../../assets/images/more/1.png";
+import { Link } from "react-router-dom";
 function About() {
-
   return (
-    <div style={{backgroundImage:`url(${backImg})`}} className="bg-cover bg-center bg-no-repeat py-12 md:py-28">
+    <div
+      style={{ backgroundImage: `url(${backImg})` }}
+      className="bg-cover bg-center bg-no-repeat py-12 md:py-28"
+    >
       <SectionHeader subHead={"Explore us"} head={"About us"}></SectionHeader>
       <div className="max-w-screen-2xl mt-12 mx-auto bg-cover bg-center px-4 sm:px-8 lg:px-16 flex flex-col md:flex-row items-center md:items-start space-y-8 md:space-y-0 md:space-x-10">
         <motion.div
@@ -15,12 +18,12 @@ function About() {
           whileHover={{ scale: 1.05, rotate: 2 }}
           transition={{ duration: 0.5 }}
         >
-          <button
-            className="text-xs font-sans sm:text-sm md:text-base font-semibold text-white py-2 px-4 bg-lime-500 rounded-md shadow-md uppercase tracking-wider"
-          >
-            Fore more <small className="text-[10px]">click</small>
+          <button className="text-xs font-sans sm:text-sm md:text-base font-semibold text-white py-2 px-4 bg-lime-500 rounded-md shadow-md uppercase tracking-wider">
+            <Link to={"/about"}>
+              Fore more <small className="text-[10px]">click</small>
+            </Link>
           </button>
-     
+
           <h1 className="text-lg font-ranch sm:text-xl md:text-2xl lg:text-6xl font-bold leading-snug text-gray-800">
             We Combine Classics and Modernity
           </h1>

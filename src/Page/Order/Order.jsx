@@ -58,12 +58,14 @@ function Order() {
   };
 
   // Calculate total price and quantity
-  const totalQuantity = cartsData.length;
-  const totalPrice = cartsData.reduce((sum, item) => sum + item.price, 0);
+
 
   if (isLoading) {
     return <Skeleton active />;
   }
+
+  const totalQuantity = cartsData.length;
+  const totalPrice = cartsData.reduce((sum, item) => sum + Number(item.price), 0);
 
   if (cartsData.length === 0) {
     return (
@@ -82,7 +84,7 @@ function Order() {
       <SectionHeader head={"Order"}></SectionHeader>
 
       {/* Order summary and payment button */}
-      <div className="flex justify-between items-center mb-6 p-4 bg-white shadow rounded-lg">
+      <div className="flex justify-between md:flex-row flex-col gap-2 md:items-center mb-6 p-4 bg-white shadow rounded-lg">
         <div>
           <p className="text-xl font-semibold">Total Items: {totalQuantity}</p>
           <p className="text-xl font-semibold">Total Price: ${totalPrice.toFixed(2)}</p>

@@ -5,11 +5,16 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../../Components/Hook/useAxiosPublic";
 import { Skeleton } from "antd";
 import Swal from "sweetalert2";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../../../Components/Hook/useAuth";
 
 function Spacial() {
   const [hoveredId, setHoveredId] = useState(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
 
   const { data: specialCoffe = [], isLoading } = useQuery({
     queryKey: ["special"],
@@ -37,8 +42,25 @@ function Spacial() {
   const handleMouseLeave = () => {
     setHoveredId(null);
   };
-
   const addToCart = (data) => {
+
+    if (!user) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You need to log in to add items to the cart!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Log In",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        }
+      });
+      return; 
+    }
+  
     const { _id, description, image, name, price, taste } = data;
     const cartData = {
       id: _id,
@@ -48,21 +70,26 @@ function Spacial() {
       image,
       description,
     };
-
-    if (!cartData) {
-      return;
-    }
-    axiosPublic.post("/carts", cartData).then((res) => {
-      console.log(res.data);
-      if (res.data.acknowledged) {
+  
+    axiosPublic.post("/carts", cartData)
+      .then((res) => {
+        if (res.data.acknowledged) {
+          Swal.fire({
+            icon: "success",
+            title: `${name} has been added to the cart!`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error adding to cart:", error);
         Swal.fire({
-          icon: "success",
-          title: `${name} is added in Cart.`,
-          showConfirmButton: false,
-          timer: 1500
+          icon: "error",
+          title: "Error",
+          text: "Could not add item to cart. Please try again later.",
         });
-      }
-    });
+      });
   };
 
   return (
@@ -139,7 +166,7 @@ function Spacial() {
         </div>
       </div>
       <button className="btn bg-lime-400 font-sans text-2xl btn-2xl mt-12">
-        See more
+        <Link to={"/menu"}>See more</Link>
       </button>
     </div>
   );

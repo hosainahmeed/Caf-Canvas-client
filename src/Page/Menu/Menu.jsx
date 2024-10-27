@@ -43,7 +43,18 @@ function Menu() {
   );
 
   if (filteredData.length === 0) {
-    return <p>We dont have</p>;
+    return (
+      <>
+        <input
+          type="text"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="input input-bordered mt-12 w-full max-w-xs"
+        />
+        <p>We dont have</p>
+      </>
+    );
   }
 
   // Filter and sort the data for Popular and Special offers
@@ -93,11 +104,11 @@ function Menu() {
   return (
     <div>
       {/* Search and Sort Controls */}
-      <div className="flex justify-between mt-12 items-center mb-6">
+      <div className="flex justify-between mt-12 items-center mb-6 px-3">
         {/* Search Input */}
         <input
           type="text"
-          placeholder="Search offers..."
+          placeholder="Search..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="input input-bordered w-full max-w-xs"
@@ -108,14 +119,14 @@ function Menu() {
           onClick={toggleSortOrder}
           className="btn bg-lime-500 text-white"
         >
-          Sort by Price: {sortOrder === "asc" ? "Ascending" : "Descending"}
+          Sort by Price: {sortOrder === "asc" ? "High Price" : "Low Price"}
         </button>
       </div>
 
       {/* Popular Offers Section */}
       <section>
         <SectionHeader head={"Popular Offers"} />
-        <div className="grid grid-cols-1 mt-12 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 mt-12 md:grid-cols-2 lg:grid-cols-3 gap-6 px-3">
           {popularOffers.map((data) => (
             <div key={data._id} className="card shadow-none rounded-none glass">
               <figure className="h-56 md:h-72">
@@ -149,7 +160,7 @@ function Menu() {
       {/* Special Offers Section */}
       <section className="mt-10">
         <SectionHeader head={"Special Offers"} />
-        <div className="grid mt-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid mt-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-3">
           {specialOffers.map((data) => (
             <div key={data._id} className="card shadow-none rounded-none glass">
               <figure className="h-80 md:h-96">

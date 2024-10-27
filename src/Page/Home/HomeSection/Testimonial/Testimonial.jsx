@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import SectionHeader from "../../../../Components/utils/sectionHeader";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
@@ -9,13 +8,6 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../../Components/Hook/useAxiosPublic";
 
 function Testimonial() {
-  const [reviews, setReviews] = useState([]);
-
-  useEffect(() => {
-    fetch("testimonial.json")
-      .then((res) => res.json())
-      .then((data) => setReviews(data));
-  }, []);
   const axiosPublic = useAxiosPublic();
 
   const { data: reviewsData = [], isLoading } = useQuery({

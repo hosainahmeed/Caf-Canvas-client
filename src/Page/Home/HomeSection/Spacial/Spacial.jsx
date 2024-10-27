@@ -4,6 +4,7 @@ import SectionHeader from "../../../../Components/utils/sectionHeader";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../../Components/Hook/useAxiosPublic";
 import { Skeleton } from "antd";
+import Swal from "sweetalert2";
 
 function Spacial() {
   const [hoveredId, setHoveredId] = useState(null);
@@ -53,6 +54,14 @@ function Spacial() {
     }
     axiosPublic.post("/carts", cartData).then((res) => {
       console.log(res.data);
+      if (res.data.acknowledged) {
+        Swal.fire({
+          icon: "success",
+          title: `${name} is added in Cart.`,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
     });
   };
 

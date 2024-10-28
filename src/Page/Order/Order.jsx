@@ -5,49 +5,39 @@ import SectionHeader from "../../Components/utils/sectionHeader";
 import Swal from "sweetalert2";
 import { NavLink } from "react-router-dom";
 import useAuth from "../../Components/Hook/useAuth";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Order() {
   const axiosPublic = useAxiosPublic();
   const queryClient = useQueryClient();
   const { user } = useAuth();
   const userEmail = user?.email;
-  const [loading, setLoading] = useState(true);
+  const [isFetching, setIsFetching] = useState(false);
 
-  const {
-    data: cartsData = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["carts", userEmail],
-    enabled: !!userEmail,
-    queryFn: async () => {
+  // Fetch cart data
+  const { data: cartsData = [], isLoading, refetch } = useQuery(
+    ["carts", userEmail],
+    async () => {
+      setIsFetching(true);
       const result = await axiosPublic.get(`/carts/${userEmail}`, {
         withCredentials: true,
       });
-      setLoading(false); // Stop loading once data is fetched
+      setIsFetching(false);
       return result.data;
     },
-  });
+    {
+      enabled: !!userEmail,
+      staleTime: 300000, // 5 mins to prevent excessive refetching
+      onSettled: () => setIsFetching(false),
+    }
+  );
 
+  // Delete item mutation
   const deleteItem = useMutation(
     async (id) => await axiosPublic.delete(`/carts/${id}`, { withCredentials: true }),
     {
-      onMutate: async (id) => {
-        // Optimistically update the cache
-        await queryClient.cancelQueries(["carts", userEmail]);
-        const previousData = queryClient.getQueryData(["carts", userEmail]);
-        queryClient.setQueryData(["carts", userEmail], (old) =>
-          old.filter((cart) => cart._id !== id)
-        );
-        return { previousData };
-      },
-      onError: (err, id, context) => {
-        // Rollback on error
-        queryClient.setQueryData(["carts", userEmail], context.previousData);
-      },
-      onSettled: () => {
-        queryClient.invalidateQueries(["carts", userEmail]);
+      onSuccess: () => {
+        queryClient.invalidateQueries(["carts"]);
       },
     }
   );
@@ -63,24 +53,35 @@ function Order() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteItem.mutate(id);
+        deleteItem.mutate(id, {
+          onSuccess: () => {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your item has been deleted.",
+              icon: "success",
+            });
+            refetch();
+          },
+        });
       }
     });
   };
 
   const totalQuantity = cartsData.length;
-  const totalPrice = cartsData.reduce(
-    (sum, item) => sum + Number(item.price),
-    0
-  );
+  const totalPrice = cartsData.reduce((sum, item) => sum + Number(item.price), 0);
 
-  // Show skeleton loader while data is loading
-  if (isLoading || loading) {
-    return <Skeleton active />;
+  if (isLoading || isFetching) {
+    return (
+      <div className="flex flex-col items-center">
+        <Skeleton active />
+        {isFetching && (
+          <p className="text-gray-500 mt-2">Loading your orders...</p>
+        )}
+      </div>
+    );
   }
 
-  // Display empty state once loading finishes and if cart is empty
-  if (!loading && cartsData.length === 0) {
+  if (cartsData.length === 0) {
     return (
       <div className="flex items-center justify-center h-[70vh]">
         <p className="text-3xl font-ranch font-black">Nothing ordered yet</p>
@@ -100,9 +101,7 @@ function Order() {
       <div className="flex justify-between md:flex-row flex-col gap-2 md:items-center mb-6 p-4 bg-white shadow rounded-lg">
         <div>
           <p className="text-xl font-semibold">Total Items: {totalQuantity}</p>
-          <p className="text-xl font-semibold">
-            Total Price: ${totalPrice.toFixed(2)}
-          </p>
+          <p className="text-xl font-semibold">Total Price: ${totalPrice.toFixed(2)}</p>
         </div>
         <Button
           type="primary"
@@ -140,12 +139,7 @@ function Order() {
             >
               <td className="p-2 sm:p-3 text-sm sm:text-base">{idx + 1}</td>
               <td className="p-2 sm:p-3">
-                <Avatar
-                  src={cart.image}
-                  shape="square"
-                  size={40}
-                  className="sm:size-48"
-                />
+                <Avatar src={cart.image} shape="square" size={40} className="sm:size-48" />
               </td>
               <td className="p-2 sm:p-3 text-sm sm:text-base">{cart.name}</td>
               <td className="p-2 sm:p-3 hidden md:table-cell text-sm sm:text-base">

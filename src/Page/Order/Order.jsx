@@ -4,10 +4,14 @@ import { Avatar, Button, Skeleton } from "antd";
 import SectionHeader from "../../Components/utils/sectionHeader";
 import Swal from "sweetalert2";
 import { NavLink } from "react-router-dom";
+import useAuth from "../../Components/Hook/useAuth";
 
 function Order() {
   const axiosPublic = useAxiosPublic();
   const queryClient = useQueryClient();
+  const { user } = useAuth();
+  console.log(user);
+  
 
   // Fetching cart data
   const {
@@ -24,7 +28,8 @@ function Order() {
 
   // Delete item mutation
   const deleteItem = useMutation(
-    async (id) => await axiosPublic.delete(`/carts/${id}`,{withCredentials:true}),
+    async (id) =>
+      await axiosPublic.delete(`/carts/${id}`, { withCredentials: true }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["carts"]);

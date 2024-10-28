@@ -33,7 +33,7 @@ function SubscriptionPlans() {
               onMouseLeave={handleMouseLeave}
               onTouchEnd={handleMouseLeave}
               onTouchStart={() => handleMouseEnter(plan.id)}
-              className="card w-full relative md:h-[50vh] rounded-none text-black shadow-xl hover:shadow-2xl transition-all bg-transparent"
+              className="card w-full relative md:h-[50vh] overflow-hidden overflow-y-scroll rounded-none text-black shadow-xl hover:shadow-2xl transition-all bg-transparent"
             >
               {hoveredId === plan.id && (
                 <AnimatePresence>

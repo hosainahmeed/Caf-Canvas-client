@@ -81,9 +81,8 @@ function Menu() {
   };
 
   const addToCart = (data) => {
-    const { _id, Category, Details, Name, Offer, Photo, Price, Taste } = data;
+    const { Category, Details, Name, Offer, Photo, Price, Taste } = data;
     const cartData = {
-      id: _id,
       name: Name,
       taste: Taste,
       price: Price,
@@ -91,7 +90,8 @@ function Menu() {
       description: Details,
       Offer,
       Category,
-      userEmail: user.email,
+      userEmail: user?.email,
+      userId: user?.uid,
     };
 
     if (!cartData) return;

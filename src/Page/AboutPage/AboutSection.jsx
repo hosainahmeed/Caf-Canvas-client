@@ -53,7 +53,7 @@ function AboutSection() {
                 initial={{ bottom: "-100%", opacity: 0 }}
                 animate={{ bottom: "0%", opacity: 1 }}
                 exit={{ bottom: "-100%", opacity: 0 }}
-                className="absolute text-white bottom-0 pt-4 pl-4 left-0 w-full h-1/2 bg-black bg-opacity-75 z-[999]"
+                className="absolute text-white bottom-0 pt-4 pl-4 left-0 w-full h-1/2 bg-black bg-opacity-75 z-[888]"
               >
                 <h1 className="text-lg sm:text-xl md:text-2xl font-bold">Name: {member.name}</h1>
                 <h1 className="text-lg sm:text-xl md:text-2xl font-bold">

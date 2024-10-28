@@ -45,6 +45,7 @@ function Spacial() {
   const handleMouseLeave = () => {
     setHoveredId(null);
   };
+
   const addToCart = (data) => {
     if (!user) {
       Swal.fire({
@@ -63,15 +64,16 @@ function Spacial() {
       return;
     }
 
-    const { _id, description, image, name, price, taste } = data;
+
+    const { description, image, name, price, taste } = data;
     const cartData = {
-      id: _id,
       name,
       taste,
       price,
       image,
       description,
-      userEmail: user.email,
+      userEmail: user?.email,
+      userId: user?.uid,
     };
 
     axiosPublic

@@ -5,36 +5,33 @@ import SectionHeader from "../../Components/utils/sectionHeader";
 import Swal from "sweetalert2";
 import { NavLink } from "react-router-dom";
 import useAuth from "../../Components/Hook/useAuth";
-import { useState, useEffect } from "react";
 
 function Order() {
   const axiosPublic = useAxiosPublic();
   const queryClient = useQueryClient();
   const { user } = useAuth();
-  const userEmail = user?.email;
-  const [isFetching, setIsFetching] = useState(false);
 
-  // Fetch cart data
-  const { data: cartsData = [], isLoading, refetch } = useQuery(
-    ["carts", userEmail],
-    async () => {
-      setIsFetching(true);
-      const result = await axiosPublic.get(`/carts/${userEmail}`, {
+  const userId = user?.uid;
+
+  // Fetch cart data based only on user ID
+  const {
+    data: cartsData = [],
+    isLoading,
+  } = useQuery({
+    queryKey: ["carts", userId],
+    enabled: !!userId,
+    queryFn: async () => {
+      const result = await axiosPublic.get(`/carts/${userId}`, {
         withCredentials: true,
       });
-      setIsFetching(false);
       return result.data;
     },
-    {
-      enabled: !!userEmail,
-      staleTime: 300000, // 5 mins to prevent excessive refetching
-      onSettled: () => setIsFetching(false),
-    }
-  );
+  });
 
   // Delete item mutation
   const deleteItem = useMutation(
-    async (id) => await axiosPublic.delete(`/carts/${id}`, { withCredentials: true }),
+    async (id) =>
+      await axiosPublic.delete(`/carts/${id}`, { withCredentials: true }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["carts"]);
@@ -60,7 +57,6 @@ function Order() {
               text: "Your item has been deleted.",
               icon: "success",
             });
-            refetch();
           },
         });
       }
@@ -68,27 +64,23 @@ function Order() {
   };
 
   const totalQuantity = cartsData.length;
-  const totalPrice = cartsData.reduce((sum, item) => sum + Number(item.price), 0);
+  const totalPrice = cartsData.reduce(
+    (sum, item) => sum + Number(item.price),
+    0
+  );
 
-  if (isLoading || isFetching) {
+  if (!userId) {
     return (
       <div className="flex flex-col items-center">
-        <Skeleton active />
-        {isFetching && (
-          <p className="text-gray-500 mt-2">Loading your orders...</p>
-        )}
+        <p>Please log in to view your cart.</p>
       </div>
     );
   }
 
-  if (cartsData.length === 0) {
+  if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-[70vh]">
-        <p className="text-3xl font-ranch font-black">Nothing ordered yet</p>
-        <br />
-        <NavLink to={"/menu"}>
-          <button className="btn ml-4">Order now</button>
-        </NavLink>
+      <div className="flex flex-col items-center">
+        <Skeleton active />
       </div>
     );
   }
@@ -101,7 +93,9 @@ function Order() {
       <div className="flex justify-between md:flex-row flex-col gap-2 md:items-center mb-6 p-4 bg-white shadow rounded-lg">
         <div>
           <p className="text-xl font-semibold">Total Items: {totalQuantity}</p>
-          <p className="text-xl font-semibold">Total Price: ${totalPrice.toFixed(2)}</p>
+          <p className="text-xl font-semibold">
+            Total Price: ${totalPrice.toFixed(2)}
+          </p>
         </div>
         <Button
           type="primary"
@@ -119,48 +113,64 @@ function Order() {
         </Button>
       </div>
 
-      {/* Order table */}
-      <table className="min-w-full mt-12 table-auto border-collapse bg-white shadow-lg rounded-lg overflow-hidden">
-        <thead>
-          <tr className="bg-lime-500 text-white">
-            <th className="p-2 sm:p-3 text-left">#</th>
-            <th className="p-2 sm:p-3 text-left">Image</th>
-            <th className="p-2 sm:p-3 text-left">Name</th>
-            <th className="p-2 sm:p-3 text-left hidden md:table-cell">Taste</th>
-            <th className="p-2 sm:p-3 text-left">Price</th>
-            <th className="p-2 sm:p-3 text-center">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cartsData.map((cart, idx) => (
-            <tr
-              key={cart._id}
-              className={`${idx % 2 === 0 ? "bg-slate-300" : "bg-gray-100"} `}
-            >
-              <td className="p-2 sm:p-3 text-sm sm:text-base">{idx + 1}</td>
-              <td className="p-2 sm:p-3">
-                <Avatar src={cart.image} shape="square" size={40} className="sm:size-48" />
-              </td>
-              <td className="p-2 sm:p-3 text-sm sm:text-base">{cart.name}</td>
-              <td className="p-2 sm:p-3 hidden md:table-cell text-sm sm:text-base">
-                {cart.taste}
-              </td>
-              <td className="p-2 sm:p-3 font-semibold text-sm sm:text-base">
-                ${cart.price}
-              </td>
-              <td className="p-2 sm:p-3 text-center">
-                <Button
-                  onClick={() => handleDelete(cart._id)}
-                  type="danger"
-                  className="text-white bg-red-500 hover:bg-red-700"
-                >
-                  Delete
-                </Button>
-              </td>
+      {cartsData.length === 0 ? (
+        <div className="flex items-center justify-center h-[70vh]">
+          <p className="text-3xl font-ranch font-black">Nothing ordered yet</p>
+          <br />
+          <NavLink to={"/menu"}>
+            <button className="btn ml-4">Order now</button>
+          </NavLink>
+        </div>
+      ) : (
+        <table className="min-w-full mt-12 table-auto border-collapse bg-white shadow-lg rounded-lg overflow-hidden">
+          <thead>
+            <tr className="bg-lime-500 text-white">
+              <th className="p-2 sm:p-3 text-left">#</th>
+              <th className="p-2 sm:p-3 text-left">Image</th>
+              <th className="p-2 sm:p-3 text-left">Name</th>
+              <th className="p-2 sm:p-3 text-left hidden md:table-cell">
+                Taste
+              </th>
+              <th className="p-2 sm:p-3 text-left">Price</th>
+              <th className="p-2 sm:p-3 text-center">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {cartsData.map((cart, idx) => (
+              <tr
+                key={cart._id}
+                className={`${idx % 2 === 0 ? "bg-slate-300" : "bg-gray-100"} `}
+              >
+                <td className="p-2 sm:p-3 text-sm sm:text-base">{idx + 1}</td>
+                <td className="p-2 sm:p-3">
+                  <Avatar
+                    src={cart.image}
+                    shape="square"
+                    size={40}
+                    className="sm:size-48"
+                  />
+                </td>
+                <td className="p-2 sm:p-3 text-sm sm:text-base">{cart.name}</td>
+                <td className="p-2 sm:p-3 hidden md:table-cell text-sm sm:text-base">
+                  {cart.taste}
+                </td>
+                <td className="p-2 sm:p-3 font-semibold text-sm sm:text-base">
+                  ${cart.price}
+                </td>
+                <td className="p-2 sm:p-3 text-center">
+                  <Button
+                    onClick={() => handleDelete(cart._id)}
+                    type="danger"
+                    className="text-white bg-red-500 hover:bg-red-700"
+                  >
+                    Delete
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }

@@ -18,11 +18,11 @@ function Order() {
   const {
     data: cartsData = [],
     isLoading,
-    isError,
+    // isError,
     refetch,
   } = useQuery({
     queryKey: ["carts", userEmail],
-    enabled: !!userEmail, // Only fetch if userEmail is defined
+    enabled: !!userEmail,
     queryFn: async () => {
       const result = await axiosPublic.get(`/carts/${userEmail}`, {
         withCredentials: true,
@@ -72,13 +72,13 @@ function Order() {
     return <Skeleton active />;
   }
 
-  if (isError) {
-    return (
-      <div className="flex items-center justify-center h-[70vh]">
-        <p className="text-3xl font-ranch font-black">Error fetching cart data!</p>
-      </div>
-    );
-  }
+  // if (isError) {
+  //   return (
+  //     <div className="flex items-center justify-center h-[70vh]">
+  //       <p className="text-3xl font-ranch font-black">Error fetching cart data!</p>
+  //     </div>
+  //   );
+  // }
 
   const totalQuantity = cartsData.length;
   const totalPrice = cartsData.reduce(

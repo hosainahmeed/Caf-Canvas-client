@@ -15,8 +15,11 @@ function Spacial() {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-
-  const { data: specialCoffe = [], isLoading,refetch } = useQuery({
+  const {
+    data: specialCoffe = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["special"],
     queryFn: async () => {
       const result = await axiosPublic.get("/special");
@@ -43,7 +46,6 @@ function Spacial() {
     setHoveredId(null);
   };
   const addToCart = (data) => {
-
     if (!user) {
       Swal.fire({
         title: "Are you sure?",
@@ -58,9 +60,9 @@ function Spacial() {
           navigate("/login");
         }
       });
-      return; 
+      return;
     }
-  
+
     const { _id, description, image, name, price, taste } = data;
     const cartData = {
       id: _id,
@@ -69,9 +71,11 @@ function Spacial() {
       price,
       image,
       description,
+      userEmail: user.email,
     };
-  
-    axiosPublic.post("/carts", cartData)
+
+    axiosPublic
+      .post("/carts", cartData)
       .then((res) => {
         if (res.data.acknowledged) {
           Swal.fire({

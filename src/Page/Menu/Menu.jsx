@@ -3,9 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../Components/Hook/useAxiosPublic";
 import SectionHeader from "../../Components/utils/sectionHeader";
 import Swal from "sweetalert2";
+import useAuth from "../../Components/Hook/useAuth";
 
 function Menu() {
   const axiosPublic = useAxiosPublic();
+  const { user } = useAuth();
   const {
     data: menuData = [],
     isLoading,
@@ -89,6 +91,7 @@ function Menu() {
       description: Details,
       Offer,
       Category,
+      userEmail: user.email,
     };
 
     if (!cartData) return;

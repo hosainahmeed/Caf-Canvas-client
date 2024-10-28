@@ -5,20 +5,18 @@ import SectionHeader from "../../Components/utils/sectionHeader";
 import Swal from "sweetalert2";
 import { NavLink } from "react-router-dom";
 import useAuth from "../../Components/Hook/useAuth";
+import { useState } from "react";
 
 function Order() {
   const axiosPublic = useAxiosPublic();
   const queryClient = useQueryClient();
   const { user } = useAuth();
-
-  // Ensure user is defined before using it
   const userEmail = user?.email;
+  const [loading, setLoading] = useState(true);
 
-  // Fetching cart data
   const {
     data: cartsData = [],
     isLoading,
-    // isError,
     refetch,
   } = useQuery({
     queryKey: ["carts", userEmail],
@@ -27,17 +25,29 @@ function Order() {
       const result = await axiosPublic.get(`/carts/${userEmail}`, {
         withCredentials: true,
       });
+      setLoading(false); // Stop loading once data is fetched
       return result.data;
     },
   });
 
-  // Delete item mutation
   const deleteItem = useMutation(
-    async (id) =>
-      await axiosPublic.delete(`/carts/${id}`, { withCredentials: true }),
+    async (id) => await axiosPublic.delete(`/carts/${id}`, { withCredentials: true }),
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["carts"]);
+      onMutate: async (id) => {
+        // Optimistically update the cache
+        await queryClient.cancelQueries(["carts", userEmail]);
+        const previousData = queryClient.getQueryData(["carts", userEmail]);
+        queryClient.setQueryData(["carts", userEmail], (old) =>
+          old.filter((cart) => cart._id !== id)
+        );
+        return { previousData };
+      },
+      onError: (err, id, context) => {
+        // Rollback on error
+        queryClient.setQueryData(["carts", userEmail], context.previousData);
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries(["carts", userEmail]);
       },
     }
   );
@@ -53,32 +63,10 @@ function Order() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteItem.mutate(id, {
-          onSuccess: () => {
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your item has been deleted.",
-              icon: "success",
-            });
-            refetch();
-          },
-        });
+        deleteItem.mutate(id);
       }
     });
   };
-
-  // Handling loading and error states
-  if (isLoading) {
-    return <Skeleton active />;
-  }
-
-  // if (isError) {
-  //   return (
-  //     <div className="flex items-center justify-center h-[70vh]">
-  //       <p className="text-3xl font-ranch font-black">Error fetching cart data!</p>
-  //     </div>
-  //   );
-  // }
 
   const totalQuantity = cartsData.length;
   const totalPrice = cartsData.reduce(
@@ -86,7 +74,13 @@ function Order() {
     0
   );
 
-  if (cartsData.length === 0) {
+  // Show skeleton loader while data is loading
+  if (isLoading || loading) {
+    return <Skeleton active />;
+  }
+
+  // Display empty state once loading finishes and if cart is empty
+  if (!loading && cartsData.length === 0) {
     return (
       <div className="flex items-center justify-center h-[70vh]">
         <p className="text-3xl font-ranch font-black">Nothing ordered yet</p>

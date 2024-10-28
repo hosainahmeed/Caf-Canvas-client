@@ -6,7 +6,11 @@ import Swal from "sweetalert2";
 
 function Menu() {
   const axiosPublic = useAxiosPublic();
-  const { data: menuData = [], isLoading } = useQuery({
+  const {
+    data: menuData = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["menu"],
     queryFn: async () => {
       const result = await axiosPublic.get("/menu");
@@ -99,6 +103,7 @@ function Menu() {
         });
       }
     });
+    refetch();
   };
 
   return (

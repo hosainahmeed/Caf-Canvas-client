@@ -10,6 +10,7 @@ import Reservation from "../Page/Reservation/Reservation";
 import AboutSection from "../Page/AboutPage/AboutSection";
 import Blog from "../Page/Blog/Blog";
 import Order from "../Page/Order/Order";
+import Contact from "../Page/Contact/Contact";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "/order",
         element: <Order></Order>,
+      },
+      {
+        path: "/contact",
+        element: <Contact></Contact>,
       },
       {
         path: "/about",

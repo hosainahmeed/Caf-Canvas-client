@@ -17,14 +17,14 @@ function Order() {
   } = useQuery({
     queryKey: ["carts"],
     queryFn: async () => {
-      const result = await axiosPublic.get("/carts");
+      const result = await axiosPublic.get("/carts", { withCredentials: true });
       return result.data;
     },
   });
 
   // Delete item mutation
   const deleteItem = useMutation(
-    async (id) => await axiosPublic.delete(`/carts/${id}`),
+    async (id) => await axiosPublic.delete(`/carts/${id}`,{withCredentials:true}),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["carts"]);
@@ -59,20 +59,22 @@ function Order() {
 
   // Calculate total price and quantity
 
-
   if (isLoading) {
     return <Skeleton active />;
   }
 
   const totalQuantity = cartsData.length;
-  const totalPrice = cartsData.reduce((sum, item) => sum + Number(item.price), 0);
+  const totalPrice = cartsData.reduce(
+    (sum, item) => sum + Number(item.price),
+    0
+  );
 
   if (cartsData.length === 0) {
     return (
       <div className="flex items-center justify-center h-[70vh]">
         <p className="text-3xl font-ranch font-black">Nothing ordered yet</p>
         <br />
-        <NavLink to={'/menu'}>
+        <NavLink to={"/menu"}>
           <button className="btn ml-4">Order now</button>
         </NavLink>
       </div>
@@ -87,13 +89,21 @@ function Order() {
       <div className="flex justify-between md:flex-row flex-col gap-2 md:items-center mb-6 p-4 bg-white shadow rounded-lg">
         <div>
           <p className="text-xl font-semibold">Total Items: {totalQuantity}</p>
-          <p className="text-xl font-semibold">Total Price: ${totalPrice.toFixed(2)}</p>
+          <p className="text-xl font-semibold">
+            Total Price: ${totalPrice.toFixed(2)}
+          </p>
         </div>
         <Button
           type="primary"
           size="large"
           className="bg-blue-500 hover:bg-blue-700 text-white"
-          onClick={() => Swal.fire("Proceed to Payment", "This will take you to the payment gateway.", "info")}
+          onClick={() =>
+            Swal.fire(
+              "Proceed to Payment",
+              "This will take you to the payment gateway.",
+              "info"
+            )
+          }
         >
           Proceed to Payment
         </Button>

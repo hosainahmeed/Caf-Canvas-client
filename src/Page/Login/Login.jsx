@@ -23,7 +23,7 @@ function Login() {
     const { email, password } = data;
     loginUser(email, password).then((res) => {
       const loggedinUser = res.user;
-      console.log(loggedinUser);
+      // console.log(loggedinUser);
 
       const user = { email };
 
@@ -31,7 +31,7 @@ function Login() {
         .post("/jwt", user, { withCredentials: true })
         .then((res) => {
           if (res.data.success) {
-            console.log(res.data);
+            // console.log(res.data);
             navigate(location?.state || "/");
           }
         })

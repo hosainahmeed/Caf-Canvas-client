@@ -7,7 +7,7 @@ import logo from "../../assets/images/more/logo1.png";
 import useAuth from "../../Components/Hook/useAuth";
 import { Popover, PopoverTrigger, PopoverContent, User } from "@nextui-org/react";
 
-export default function CombinedNavbar() {
+export default function Header() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const { user, logOut } = useAuth();
@@ -17,11 +17,11 @@ export default function CombinedNavbar() {
     { label: "Home", path: "/" },
     { label: "About Us", path: "/about" },
     { label: "Menu", path: "/menu" },
-    { label: "Reservation", path: "/reservation" },
     { label: "Blog", path: "/blog" },
     { label: "Order", path: "/order" },
+    { label: "Contact", path: "/contact" },
+    { label: "Reservation", path: "/reservation" },
     { label: "History", path: "/history" },
-    { label: "Profile", path: "/profile" },
   ];
 
   const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);

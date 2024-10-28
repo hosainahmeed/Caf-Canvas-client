@@ -11,7 +11,7 @@ function AddCoffee() {
 
   const axiosPublic = useAxiosPublic();
   const onSubmit = (data) => {
-    console.log("Submitted Data:", data);
+    // console.log("Submitted Data:", data);
     axiosPublic.post("/coffee", data).then((result) => {
       console.log(result.data);
     });

@@ -18,7 +18,7 @@ function UpdateCoffe() {
 
   const axiosPublic = useAxiosPublic();
   const onSubmit = (data) => {
-    console.log("Update Data:", data);
+    // console.log("Update Data:", data);
     axiosPublic.put(`/coffee/${_id}`, data).then((result) => {
       const { modifiedCount } = result.data;
       if (modifiedCount > 0) {

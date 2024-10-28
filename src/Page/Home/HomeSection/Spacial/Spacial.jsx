@@ -16,7 +16,7 @@ function Spacial() {
   const { user } = useAuth();
 
 
-  const { data: specialCoffe = [], isLoading } = useQuery({
+  const { data: specialCoffe = [], isLoading,refetch } = useQuery({
     queryKey: ["special"],
     queryFn: async () => {
       const result = await axiosPublic.get("/special");
@@ -80,6 +80,7 @@ function Spacial() {
             showConfirmButton: false,
             timer: 1500,
           });
+          refetch();
         }
       })
       .catch((error) => {

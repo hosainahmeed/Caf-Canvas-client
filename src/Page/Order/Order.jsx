@@ -10,8 +10,6 @@ function Order() {
   const axiosPublic = useAxiosPublic();
   const queryClient = useQueryClient();
   const { user } = useAuth();
-  console.log(user);
-  
 
   // Fetching cart data
   const {
@@ -19,9 +17,11 @@ function Order() {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["carts"],
+    queryKey: ["carts", user.email],
     queryFn: async () => {
-      const result = await axiosPublic.get("/carts", { withCredentials: true });
+      const result = await axiosPublic.get(`/carts/${user.email}`, {
+        withCredentials: true,
+      });
       return result.data;
     },
   });

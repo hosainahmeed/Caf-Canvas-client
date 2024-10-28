@@ -10,22 +10,23 @@ function Order() {
   const axiosPublic = useAxiosPublic();
   const queryClient = useQueryClient();
   const { user } = useAuth();
-  console.log(user.email);
+
+  // Ensure user is defined before using it
+  const userEmail = user?.email;
 
   // Fetching cart data
   const {
     data: cartsData = [],
     isLoading,
+    isError,
     refetch,
   } = useQuery({
-    queryKey: ["carts", user.email],
-    enabled: !!user.email,
+    queryKey: ["carts", userEmail],
+    enabled: !!userEmail, // Only fetch if userEmail is defined
     queryFn: async () => {
-      const result = await axiosPublic.get(`/carts/${user?.email}`, {
+      const result = await axiosPublic.get(`/carts/${userEmail}`, {
         withCredentials: true,
       });
-      console.log(result.data);
-
       return result.data;
     },
   });
@@ -66,10 +67,17 @@ function Order() {
     });
   };
 
-  // Calculate total price and quantity
-
+  // Handling loading and error states
   if (isLoading) {
     return <Skeleton active />;
+  }
+
+  if (isError) {
+    return (
+      <div className="flex items-center justify-center h-[70vh]">
+        <p className="text-3xl font-ranch font-black">Error fetching cart data!</p>
+      </div>
+    );
   }
 
   const totalQuantity = cartsData.length;
@@ -92,7 +100,7 @@ function Order() {
 
   return (
     <div className="overflow-x-auto sm:px-4 px-2 py-6">
-      <SectionHeader head={"Order"}></SectionHeader>
+      <SectionHeader head={"Order"} />
 
       {/* Order summary and payment button */}
       <div className="flex justify-between md:flex-row flex-col gap-2 md:items-center mb-6 p-4 bg-white shadow rounded-lg">
